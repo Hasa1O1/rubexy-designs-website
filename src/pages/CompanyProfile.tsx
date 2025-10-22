@@ -47,10 +47,11 @@ export function CompanyProfile() {
               {/* Company Logo Area */}
               <div className="mb-8">
                 <div className="w-32 h-32 bg-white rounded-full mx-auto flex items-center justify-center border-4 border-gray-300 shadow-lg">
-                  <div className="text-center">
-                    <div className="text-gray-800 text-xl font-bold">Rubexy</div>
-                    <div className="text-gray-600 text-sm font-medium">DESIGNS LTD</div>
-                  </div>
+                  <img 
+                    src="/logo.svg" 
+                    alt="RDL Logo" 
+                    className="w-24 h-24 object-contain"
+                  />
                 </div>
               </div>
 

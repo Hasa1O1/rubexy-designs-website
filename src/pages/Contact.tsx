@@ -18,11 +18,18 @@ export function Contact() {
 
       <main>
         {/* Hero */}
-        <section className="bg-gradient-to-b from-primary/5 to-background py-20">
+        <section className="bg-gradient-to-br from-gray-50 to-orange-50 py-20">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
-              <p className="text-xl text-muted-foreground">
+              <div className="w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                <img 
+                  src="/logo.svg" 
+                  alt="RDL Logo" 
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6 font-brand">Contact Us</h1>
+              <p className="text-xl text-gray-600 font-brand">
                 Let's discuss how we can help bring your vision to life
               </p>
             </div>

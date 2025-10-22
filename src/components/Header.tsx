@@ -28,8 +28,12 @@ export function Header() {
       <nav className="container mx-auto flex h-16 items-center justify-between px-4" aria-label="Main navigation">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center">
-            <span className="text-white font-bold text-lg">RD</span>
+          <div className="w-12 h-12 flex items-center justify-center">
+            <img 
+              src="/logo.svg" 
+              alt="RDL Logo" 
+              className="w-full h-full object-contain"
+            />
           </div>
           <div className="flex flex-col">
             <span className="text-xl font-bold text-gray-800 font-brand">Rubexy Designs</span>
