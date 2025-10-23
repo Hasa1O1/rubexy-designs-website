@@ -30,7 +30,7 @@ export function Header() {
         <Link to="/" className="flex items-center space-x-3">
           <div className="w-12 h-12 flex items-center justify-center">
             <img 
-              src="/logo.svg" 
+              src="/RDL Logo Full Color.png" 
               alt="RDL Logo" 
               className="w-full h-full object-contain"
             />

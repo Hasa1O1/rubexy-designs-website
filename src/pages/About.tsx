@@ -22,7 +22,7 @@ export function About() {
             <div className="mx-auto max-w-3xl text-center">
               <div className="w-24 h-24 mx-auto mb-6 flex items-center justify-center">
                 <img 
-                  src="/logo.svg" 
+                  src="/RDL Logo Full Color.png" 
                   alt="RDL Logo" 
                   className="w-full h-full object-contain"
                 />

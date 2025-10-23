@@ -12,7 +12,7 @@ export function StructuredData() {
       name: 'Rubexy Designs Limited',
       alternateName: 'RDL',
       url: 'https://rubexydesigns.com',
-      logo: 'https://rubexydesigns.com/logo.svg',
+      logo: 'https://rubexydesigns.com/RDL Logo Full Color.png',
       description: 'Rubexy Designs Limited delivers high-quality brand, print, and media solutions for businesses in Zambia and beyond.',
       email: 'rubexydesigns@gmail.com',
       telephone: ['+260972188566', '+260955530293'],

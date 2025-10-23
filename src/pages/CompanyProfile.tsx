@@ -48,7 +48,7 @@ export function CompanyProfile() {
               <div className="mb-8">
                 <div className="w-32 h-32 bg-white rounded-full mx-auto flex items-center justify-center border-4 border-gray-300 shadow-lg">
                   <img 
-                    src="/logo.svg" 
+                    src="/RDL Logo Full Color.png" 
                     alt="RDL Logo" 
                     className="w-24 h-24 object-contain"
                   />
