@@ -1,6 +1,6 @@
 import { Building, Users, Award, Heart, Target, Eye } from 'lucide-react'
 import { SEO } from '@/components/SEO'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 /**
  * Company Profile page component

@@ -1,6 +1,6 @@
 import { Mail, Phone, MapPin, Clock } from 'lucide-react'
 import { ContactForm } from '@/components/ContactForm'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { SEO } from '@/components/SEO'
 
 /**
