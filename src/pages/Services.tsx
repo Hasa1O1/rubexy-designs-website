@@ -15,10 +15,10 @@ import { SEO } from '@/components/SEO'
 
 /**
  * Services page component
- * Displays all services split into Brand & Print and Media categories
+ * Displays printing, branding, and media services
  */
 export function Services() {
-  const brandPrintServices = [
+  const printServices = [
     {
       icon: Printer,
       title: 'Printing Services',
@@ -33,18 +33,34 @@ export function Services() {
       ],
     },
     {
-      icon: Palette,
-      title: 'Branding & Signage',
-      description: 'Create a lasting impression with professional branding',
+      icon: FileText,
+      title: 'Publications & Reports',
+      description: 'Premium publishing for corporate and marketing materials',
       items: [
-        'Logo design',
-        'Corporate identity',
-        'Sign posts and light boxes',
-        'Billboards',
-        'Pop-ups and banners',
-        'Office branding',
+        'Annual reports & brochures',
+        'Corporate profiles',
+        'Training manuals & guides',
+        'Proposal and tender documents',
+        'Catalogues and menu books',
+        'Technical documentation',
       ],
     },
+    {
+      icon: Award,
+      title: 'Large Format Printing',
+      description: 'High-impact displays for indoor and outdoor visibility',
+      items: [
+        'Billboards and light boxes',
+        'Pop-up and roll-up banners',
+        'Trade show graphics',
+        'Event backdrops',
+        'Window & floor graphics',
+        'Wayfinding signage',
+      ],
+    },
+  ]
+
+  const brandingServices = [
     {
       icon: Shirt,
       title: 'Corporate Wear',
@@ -130,25 +146,49 @@ export function Services() {
           </div>
         </section>
 
-        {/* Brand & Print Services */}
+        {/* Print Services */}
         <section className="py-16">
           <div className="container mx-auto px-4">
             <div className="mb-12 text-center">
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-4">
-                <Award className="h-5 w-5 text-primary" aria-hidden="true" />
-                <span className="text-sm font-medium text-primary">Brand & Print</span>
+                <Printer className="h-5 w-5 text-primary" aria-hidden="true" />
+                <span className="text-sm font-medium text-primary">Print</span>
               </div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Brand & Print Solutions
+                Print Production Excellence
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                From concept to completion, we deliver high-quality printing and branding services
-                that help your business stand out.
+                From short-run digital to long-run offset, we deliver crisp print quality with
+                professional finishing that elevates your business communication.
               </p>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              {brandPrintServices.map((service, index) => (
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {printServices.map((service, index) => (
+                <ServiceCard key={index} {...service} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Branding Services */}
+        <section className="py-16 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="mb-12 text-center">
+              <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-4">
+                <Palette className="h-5 w-5 text-primary" aria-hidden="true" />
+                <span className="text-sm font-medium text-primary">Brand</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Branding & Identity Solutions
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Build trust with a cohesive brand touchpoint—from signage and uniforms to vehicle graphics and interior experiences.
+              </p>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {brandingServices.map((service, index) => (
                 <ServiceCard key={index} {...service} />
               ))}
             </div>
@@ -156,7 +196,7 @@ export function Services() {
         </section>
 
         {/* Media Services */}
-        <section className="py-16 bg-muted/30">
+        <section className="py-16">
           <div className="container mx-auto px-4">
             <div className="mb-12 text-center">
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-4">
