@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Hero } from '@/components/Hero'
 import { ComplianceStrip } from '@/components/ComplianceStrip'
-import { LogoWall } from '@/components/LogoWall'
 import { PortfolioGrid, PortfolioItem } from '@/components/PortfolioGrid'
 import { Button } from '@/components/ui/button'
 import { Heart } from 'lucide-react'
@@ -121,9 +120,6 @@ export function Home() {
 
         {/* Compliance badges */}
         <ComplianceStrip />
-
-        {/* Client logos */}
-        <LogoWall />
 
         {/* CSR Section */}
         <section className="py-16 bg-orange-50">
