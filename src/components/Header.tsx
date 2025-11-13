@@ -18,8 +18,6 @@ export function Header() {
     { to: '/about', label: 'About' },
     { to: '/services', label: 'Services' },
     { to: '/portfolio', label: 'Portfolio' },
-    { to: '/clients', label: 'Clients' },
-    { to: '/certifications', label: 'Certifications' },
     { to: '/contact', label: 'Contact' },
   ]
 

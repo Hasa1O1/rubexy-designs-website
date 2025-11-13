@@ -1,12 +1,77 @@
-import { Building, Users, Award, Heart, Target, Eye } from 'lucide-react'
+import { Building, Users, Award, Heart, Target, Eye, Shield, FileCheck } from 'lucide-react'
 import { SEO } from '@/components/SEO'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { LogoWall } from '@/components/LogoWall'
+import { Testimonial } from '@/components/Testimonial'
 
 /**
  * Company Profile page component
  * Matches the PDF design with orange/grey color scheme and Century Gothic typography
  */
 export function CompanyProfile() {
+  const certifications = [
+    {
+      id: 'pacra',
+      icon: Building,
+      title: 'PACRA Certificate',
+      subtitle: 'Company Registration',
+      status: 'Active',
+      valid: 'Registered 2013 • Incorporated 15 Dec 2021',
+      description: 'Private Company Limited by Shares',
+    },
+    {
+      id: 'zra',
+      icon: FileCheck,
+      title: 'ZRA Tax Clearance',
+      subtitle: 'Tax Compliance',
+      status: 'Valid',
+      valid: 'Valid through 31 Dec 2025',
+      description: 'Current tax clearance certificate in good standing',
+    },
+    {
+      id: 'napsa',
+      icon: Shield,
+      title: 'NAPSA Compliance',
+      subtitle: 'Social Security',
+      status: 'Valid',
+      valid: 'Valid through 18 Jun 2025',
+      description: 'Employee contributions fully up to date',
+    },
+    {
+      id: 'zppa',
+      icon: Award,
+      title: 'ZPPA Supplier Registration',
+      subtitle: 'Procurement',
+      status: 'Active',
+      valid: 'Valid through 18 Mar 2026',
+      description: 'Approved supplier for Printing, Media & ICT categories',
+    },
+  ]
+
+  const testimonials = [
+    {
+      quote:
+        'Rubexy Designs delivered exceptional quality on our fleet branding project. The attention to detail and professional service exceeded our expectations.',
+      author: 'John Mwape',
+      role: 'Operations Manager',
+      company: 'Logistics Company',
+    },
+    {
+      quote:
+        'The team handled our annual report with utmost professionalism. From design to print, everything was flawless. We trust Rubexy for our corporate publishing needs.',
+      author: 'Sarah Phiri',
+      role: 'Marketing Director',
+      company: 'Financial Services',
+    },
+    {
+      quote:
+        'Excellent photography and documentary production services. They captured our cancer awareness campaign beautifully and professionally.',
+      author: 'Dr. Grace Banda',
+      role: 'Executive Director',
+      company: 'Breakthrough Cancer Trust',
+    },
+  ]
+
   return (
     <>
       <SEO
@@ -79,7 +144,7 @@ export function CompanyProfile() {
         </section>
 
         {/* Mission & Vision Section */}
-        <section className="py-16 bg-white relative">
+        <section className="py-16 bg-white relative" id="mission">
           <div className="container mx-auto px-4">
             <div className="grid gap-12 md:grid-cols-2 max-w-6xl mx-auto">
               {/* Mission */}
@@ -128,7 +193,7 @@ export function CompanyProfile() {
         </section>
 
         {/* Company Information Section */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50" id="story">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <div className="bg-white rounded-2xl shadow-lg p-8">
@@ -194,7 +259,7 @@ export function CompanyProfile() {
         </section>
 
         {/* CSR Section */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white" id="csr">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <Card className="border-2 border-orange-200 bg-gradient-to-r from-orange-50 to-white">
@@ -223,7 +288,7 @@ export function CompanyProfile() {
         </section>
 
         {/* Values Section */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50" id="values">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-800 mb-4">Why Choose Rubexy Designs Limited?</h2>
@@ -289,6 +354,85 @@ export function CompanyProfile() {
                   <p className="text-gray-600">Our motto drives us to push creative boundaries and deliver innovative solutions.</p>
                 </CardContent>
               </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Compliance & Certifications */}
+        <section className="py-16 bg-white" id="compliance">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-800 font-brand">Compliance & Certifications</h2>
+              <p className="text-gray-600 mt-2 font-brand">
+                Fully registered and compliant with all Zambian regulatory requirements
+              </p>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {certifications.map((cert) => {
+                const Icon = cert.icon
+                return (
+                  <Card key={cert.id} className="border-2 border-orange-200 hover:shadow-xl transition-shadow">
+                    <CardHeader>
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center text-white shadow-lg">
+                          <Icon className="h-6 w-6" />
+                        </div>
+                        <div>
+                          <CardTitle className="text-lg font-brand">{cert.title}</CardTitle>
+                          <p className="text-sm text-gray-500 font-brand">{cert.subtitle}</p>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="pt-0 space-y-3">
+                      <div className="flex items-center justify-between text-sm font-brand">
+                        <span className="text-gray-500">Status</span>
+                        <span className="font-semibold text-green-600">{cert.status}</span>
+                      </div>
+                      <div className="text-sm text-gray-600 font-brand">{cert.valid}</div>
+                      <p className="text-sm text-gray-600 font-brand">{cert.description}</p>
+                    </CardContent>
+                  </Card>
+                )
+              })}
+            </div>
+
+            <div className="mt-12 max-w-3xl mx-auto text-center">
+              <p className="text-sm text-gray-500 font-brand">
+                Copies of certificates can be provided to authorized parties upon request. We maintain privacy and security while remaining
+                transparent with partners and clients.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Clients & Testimonials */}
+        <section className="py-16 bg-gray-50" id="clients">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-800 font-brand">Clients & Partnerships</h2>
+              <p className="text-gray-600 mt-2 font-brand">
+                Trusted by leading organizations across Zambia and the region
+              </p>
+            </div>
+
+            <LogoWall />
+
+            <div className="mt-16 text-center max-w-3xl mx-auto">
+              <h3 className="text-2xl font-semibold text-gray-800 font-brand mb-4">Project Highlights</h3>
+              <p className="text-gray-600 font-brand">
+                We have successfully delivered fleet branding for DHL Express and continue to support Breakthrough Cancer Trust with media
+                services for cancer awareness initiatives.
+              </p>
+            </div>
+
+            <div className="mt-12">
+              <h3 className="text-2xl font-semibold text-gray-800 font-brand text-center mb-8">What Our Clients Say</h3>
+              <div className="grid gap-6 md:grid-cols-3">
+                {testimonials.map((testimonial, index) => (
+                  <Testimonial key={index} {...testimonial} />
+                ))}
+              </div>
             </div>
           </div>
         </section>
