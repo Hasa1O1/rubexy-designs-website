@@ -16,6 +16,7 @@ import { Certifications } from '@/pages/Certifications'
 import { Contact } from '@/pages/Contact'
 import { RFQ } from '@/pages/RFQ'
 import { Privacy } from '@/pages/Privacy'
+import AdminLogin from '@/pages/AdminLogin'
 
 // Create React Query client
 const queryClient = new QueryClient({
@@ -50,6 +51,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/services" element={<Services />} />
               <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="/clients" element={<Clients />} />
               <Route path="/certifications" element={<Certifications />} />
               <Route path="/contact" element={<Contact />} />
