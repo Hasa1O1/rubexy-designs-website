@@ -1,12 +1,17 @@
 import { Award, Target, Eye, Heart } from 'lucide-react'
 import { SEO } from '@/components/SEO'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { EditText } from '@/components/EditText'
+import { UploadImage } from '@/components/UploadImage'
+import { useContentValue } from '@/hooks/useSiteContent'
 
 /**
  * About page component
  * Information about company background, vision, mission, and CSR
  */
 export function About() {
+  const logoSrc = useContentValue('site.logo', '/RDL Logo Full Color.png')
+
   return (
     <>
       <SEO
@@ -20,17 +25,32 @@ export function About() {
         <section className="bg-gradient-to-br from-gray-50 to-orange-50 py-20">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl text-center">
-              <div className="w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+              <div className="w-24 h-24 mx-auto mb-6 overflow-hidden rounded-full bg-white shadow-lg">
                 <img 
-                  src="/RDL Logo Full Color.png" 
+                  src={logoSrc} 
                   alt="RDL Logo" 
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                 />
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6 font-brand">About Rubexy Designs</h1>
-              <p className="text-xl text-gray-600 font-brand">
-                Over a decade of creativity, innovation, and excellence in brand, print, and media solutions.
-              </p>
+              <UploadImage contentKey="site.logo" label="Logo" className="block mx-auto mb-6" />
+              <EditText
+                contentKey="about.hero.title"
+                fallback="About Rubexy Designs"
+                render={(value) => (
+                  <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6 font-brand">
+                    {value}
+                  </h1>
+                )}
+              />
+              <EditText
+                contentKey="about.hero.subtitle"
+                fallback="Over a decade of creativity, innovation, and excellence in brand, print, and media solutions."
+                render={(value) => (
+                  <p className="text-xl text-gray-600 font-brand">
+                    {value}
+                  </p>
+                )}
+              />
             </div>
           </div>
         </section>
@@ -39,24 +59,43 @@ export function About() {
         <section className="py-16">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-4xl">
-              <h2 className="text-3xl font-bold mb-6">Our Story</h2>
+              <EditText
+                contentKey="about.story.title"
+                fallback="Our Story"
+                render={(value) => (
+                  <h2 className="text-3xl font-bold mb-6">
+                    {value}
+                  </h2>
+                )}
+              />
               <div className="prose prose-lg max-w-none">
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  <strong>Rubexy Designs Limited</strong> was established in 2012 as a PACRA business name
-                  (registered 2013) and incorporated as a Private Company Limited by Shares on{' '}
-                  <strong>December 15, 2021</strong>. From our humble beginnings, we have grown into
-                  one of Zambia's trusted providers of comprehensive brand, print, and media solutions.
-                </p>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  Based in <strong>FINDECO House, Floor 12, Lusaka</strong>, we serve clients across
-                  Zambia and beyond. Our commitment to quality, professionalism, and efficiency has
-                  earned us the trust of leading organizations, government entities, and private businesses.
-                </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  We are fully compliant with Zambian regulations, holding current certifications from
-                  PACRA, ZRA (Tax Clearance valid through December 2025), NAPSA (valid through June 2025),
-                  and ZPPA supplier registration (valid through March 2026).
-                </p>
+                <EditText
+                  contentKey="about.story.paragraph1"
+                  fallback="Rubexy Designs Limited was established in 2012 as a PACRA business name (registered 2013) and incorporated as a Private Company Limited by Shares on December 15, 2021. From our humble beginnings, we have grown into one of Zambia's trusted providers of comprehensive brand, print, and media solutions."
+                  render={(value) => (
+                    <p className="text-muted-foreground leading-relaxed mb-4">
+                      {value}
+                    </p>
+                  )}
+                />
+                <EditText
+                  contentKey="about.story.paragraph2"
+                  fallback="Based in FINDECO House, Floor 12, Lusaka, we serve clients across Zambia and beyond. Our commitment to quality, professionalism, and efficiency has earned us the trust of leading organizations, government entities, and private businesses."
+                  render={(value) => (
+                    <p className="text-muted-foreground leading-relaxed mb-4">
+                      {value}
+                    </p>
+                  )}
+                />
+                <EditText
+                  contentKey="about.story.paragraph3"
+                  fallback="We are fully compliant with Zambian regulations, holding current certifications from PACRA, ZRA (Tax Clearance valid through December 2025), NAPSA (valid through June 2025), and ZPPA supplier registration (valid through March 2026)."
+                  render={(value) => (
+                    <p className="text-muted-foreground leading-relaxed">
+                      {value}
+                    </p>
+                  )}
+                />
               </div>
             </div>
           </div>
@@ -70,15 +109,27 @@ export function About() {
                 <CardHeader>
                   <div className="flex items-center gap-3 mb-2">
                     <Eye className="h-8 w-8 text-primary" aria-hidden="true" />
-                    <CardTitle className="text-2xl">Our Vision</CardTitle>
+                    <EditText
+                      contentKey="about.vision.title"
+                      fallback="Our Vision"
+                      render={(value) => (
+                        <CardTitle className="text-2xl">
+                          {value}
+                        </CardTitle>
+                      )}
+                    />
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground leading-relaxed">
-                    To maintain long-term business relations by providing quality products and
-                    services professionally. We envision being the partner of choice for businesses
-                    seeking reliable, innovative, and comprehensive brand and media solutions.
-                  </p>
+                  <EditText
+                    contentKey="about.vision.content"
+                    fallback="To maintain long-term business relations by providing quality products and services professionally. We envision being the partner of choice for businesses seeking reliable, innovative, and comprehensive brand and media solutions."
+                    render={(value) => (
+                      <p className="text-muted-foreground leading-relaxed">
+                        {value}
+                      </p>
+                    )}
+                  />
                 </CardContent>
               </Card>
 
@@ -86,15 +137,27 @@ export function About() {
                 <CardHeader>
                   <div className="flex items-center gap-3 mb-2">
                     <Target className="h-8 w-8 text-primary" aria-hidden="true" />
-                    <CardTitle className="text-2xl">Our Mission</CardTitle>
+                    <EditText
+                      contentKey="about.mission.title"
+                      fallback="Our Mission"
+                      render={(value) => (
+                        <CardTitle className="text-2xl">
+                          {value}
+                        </CardTitle>
+                      )}
+                    />
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground leading-relaxed">
-                    To provide solution-based products and services in an innovative, professional,
-                    and efficient manner. We are committed to understanding our clients' unique needs
-                    and delivering tailored solutions that exceed expectations.
-                  </p>
+                  <EditText
+                    contentKey="about.mission.content"
+                    fallback="To provide solution-based products and services in an innovative, professional, and efficient manner. We are committed to understanding our clients' unique needs and delivering tailored solutions that exceed expectations."
+                    render={(value) => (
+                      <p className="text-muted-foreground leading-relaxed">
+                        {value}
+                      </p>
+                    )}
+                  />
                 </CardContent>
               </Card>
             </div>
@@ -105,38 +168,219 @@ export function About() {
         <section className="py-16">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-4xl">
-              <h2 className="text-3xl font-bold mb-6 text-center">What We Do</h2>
-              <div className="grid gap-6 md:grid-cols-2">
+              <EditText
+                contentKey="about.whatwedo.title"
+                fallback="What We Do"
+                render={(value) => (
+                  <h2 className="text-3xl font-bold mb-6 text-center">
+                    {value}
+                  </h2>
+                )}
+              />
+              <div className="grid gap-6 md:grid-cols-3">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Brand & Print</CardTitle>
-                    <CardDescription>Comprehensive printing and branding solutions</CardDescription>
+                    <EditText
+                      contentKey="about.whatwedo.print.title"
+                      fallback="Print"
+                      render={(value) => (
+                        <CardTitle>
+                          {value}
+                        </CardTitle>
+                      )}
+                    />
+                    <EditText
+                      contentKey="about.whatwedo.print.description"
+                      fallback="High-quality print production for reports, stationery, signage, and marketing materials."
+                      render={(value) => (
+                        <CardDescription>
+                          {value}
+                        </CardDescription>
+                      )}
+                    />
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li>• Books, magazines, posters, flyers</li>
-                      <li>• Certificates, business cards, letterheads</li>
-                      <li>• Corporate wear supply & branding</li>
-                      <li>• Vehicle branding & signage</li>
-                      <li>• Billboards, light boxes, pop-up banners</li>
-                      <li>• Office branding & embroidery</li>
+                      <li>
+                        <EditText
+                          contentKey="about.whatwedo.print.item1"
+                          fallback="• Books, magazines, posters, flyers"
+                          render={(value) => <span>{value}</span>}
+                        />
+                      </li>
+                      <li>
+                        <EditText
+                          contentKey="about.whatwedo.print.item2"
+                          fallback="• Certificates, business cards, letterheads"
+                          render={(value) => <span>{value}</span>}
+                        />
+                      </li>
+                      <li>
+                        <EditText
+                          contentKey="about.whatwedo.print.item3"
+                          fallback="• Annual reports, corporate profiles, and manuals"
+                          render={(value) => <span>{value}</span>}
+                        />
+                      </li>
+                      <li>
+                        <EditText
+                          contentKey="about.whatwedo.print.item4"
+                          fallback="• Banners, billboards, and large-format signage"
+                          render={(value) => <span>{value}</span>}
+                        />
+                      </li>
+                      <li>
+                        <EditText
+                          contentKey="about.whatwedo.print.item5"
+                          fallback="• Catalogues, brochures, and branded documents"
+                          render={(value) => <span>{value}</span>}
+                        />
+                      </li>
+                      <li>
+                        <EditText
+                          contentKey="about.whatwedo.print.item6"
+                          fallback="• Forms, invoices, quotations, and office stationery"
+                          render={(value) => <span>{value}</span>}
+                        />
+                      </li>
                     </ul>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>Media</CardTitle>
-                    <CardDescription>Professional photography and video production</CardDescription>
+                    <EditText
+                      contentKey="about.whatwedo.brand.title"
+                      fallback="Brand"
+                      render={(value) => (
+                        <CardTitle>
+                          {value}
+                        </CardTitle>
+                      )}
+                    />
+                    <EditText
+                      contentKey="about.whatwedo.brand.description"
+                      fallback="Identity, corporate wear, vehicle branding, and signage that strengthen your brand presence."
+                      render={(value) => (
+                        <CardDescription>
+                          {value}
+                        </CardDescription>
+                      )}
+                    />
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li>• Professional photography</li>
-                      <li>• Documentary production</li>
-                      <li>• Video advertisements</li>
-                      <li>• Corporate videography</li>
-                      <li>• Event coverage</li>
-                      <li>• Product photography</li>
+                      <li>
+                        <EditText
+                          contentKey="about.whatwedo.brand.item1"
+                          fallback="• Corporate wear supply & branding"
+                          render={(value) => <span>{value}</span>}
+                        />
+                      </li>
+                      <li>
+                        <EditText
+                          contentKey="about.whatwedo.brand.item2"
+                          fallback="• Vehicle branding & signage"
+                          render={(value) => <span>{value}</span>}
+                        />
+                      </li>
+                      <li>
+                        <EditText
+                          contentKey="about.whatwedo.brand.item3"
+                          fallback="• Office branding & embroidery"
+                          render={(value) => <span>{value}</span>}
+                        />
+                      </li>
+                      <li>
+                        <EditText
+                          contentKey="about.whatwedo.brand.item4"
+                          fallback="• Logo and identity design"
+                          render={(value) => <span>{value}</span>}
+                        />
+                      </li>
+                      <li>
+                        <EditText
+                          contentKey="about.whatwedo.brand.item5"
+                          fallback="• Signage and interior branding"
+                          render={(value) => <span>{value}</span>}
+                        />
+                      </li>
+                      <li>
+                        <EditText
+                          contentKey="about.whatwedo.brand.item6"
+                          fallback="• Branded merchandise and packaging"
+                          render={(value) => <span>{value}</span>}
+                        />
+                      </li>
+                    </ul>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <EditText
+                      contentKey="about.whatwedo.media.title"
+                      fallback="Media"
+                      render={(value) => (
+                        <CardTitle>
+                          {value}
+                        </CardTitle>
+                      )}
+                    />
+                    <EditText
+                      contentKey="about.whatwedo.media.description"
+                      fallback="Professional photography and video production"
+                      render={(value) => (
+                        <CardDescription>
+                          {value}
+                        </CardDescription>
+                      )}
+                    />
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li>
+                        <EditText
+                          contentKey="about.whatwedo.media.item1"
+                          fallback="• Professional photography"
+                          render={(value) => <span>{value}</span>}
+                        />
+                      </li>
+                      <li>
+                        <EditText
+                          contentKey="about.whatwedo.media.item2"
+                          fallback="• Documentary production"
+                          render={(value) => <span>{value}</span>}
+                        />
+                      </li>
+                      <li>
+                        <EditText
+                          contentKey="about.whatwedo.media.item3"
+                          fallback="• Video advertisements"
+                          render={(value) => <span>{value}</span>}
+                        />
+                      </li>
+                      <li>
+                        <EditText
+                          contentKey="about.whatwedo.media.item4"
+                          fallback="• Corporate videography"
+                          render={(value) => <span>{value}</span>}
+                        />
+                      </li>
+                      <li>
+                        <EditText
+                          contentKey="about.whatwedo.media.item5"
+                          fallback="• Event coverage"
+                          render={(value) => <span>{value}</span>}
+                        />
+                      </li>
+                      <li>
+                        <EditText
+                          contentKey="about.whatwedo.media.item6"
+                          fallback="• Product photography"
+                          render={(value) => <span>{value}</span>}
+                        />
+                      </li>
                     </ul>
                   </CardContent>
                 </Card>
@@ -153,21 +397,36 @@ export function About() {
                 <CardHeader>
                   <div className="flex items-center gap-3 mb-2">
                     <Heart className="h-8 w-8 text-primary" aria-hidden="true" />
-                    <CardTitle className="text-2xl">Corporate Social Responsibility</CardTitle>
+                    <EditText
+                      contentKey="about.csr.title"
+                      fallback="Corporate Social Responsibility"
+                      render={(value) => (
+                        <CardTitle className="text-2xl">
+                          {value}
+                        </CardTitle>
+                      )}
+                    />
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground leading-relaxed mb-4">
-                    At Rubexy Designs, we believe in giving back to the community. We are proud to
-                    serve as a <strong>media partner for Breakthrough Cancer Trust</strong>, providing
-                    media services for cancer-awareness initiatives.
-                  </p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Through our partnership, we use our expertise in photography, videography, and
-                    multimedia production to help raise awareness about cancer prevention, early
-                    detection, and support for those affected. This is our way of using creativity
-                    for a meaningful cause.
-                  </p>
+                  <EditText
+                    contentKey="about.csr.paragraph1"
+                    fallback="At Rubexy Designs, we believe in giving back to the community. We are proud to serve as a media partner for Breakthrough Cancer Trust, providing media services for cancer-awareness initiatives."
+                    render={(value) => (
+                      <p className="text-muted-foreground leading-relaxed mb-4">
+                        {value}
+                      </p>
+                    )}
+                  />
+                  <EditText
+                    contentKey="about.csr.paragraph2"
+                    fallback="Through our partnership, we use our expertise in photography, videography, and multimedia production to help raise awareness about cancer prevention, early detection, and support for those affected. This is our way of using creativity for a meaningful cause."
+                    render={(value) => (
+                      <p className="text-muted-foreground leading-relaxed">
+                        {value}
+                      </p>
+                    )}
+                  />
                 </CardContent>
               </Card>
             </div>
@@ -178,28 +437,78 @@ export function About() {
         <section className="py-16">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-4xl text-center">
-              <h2 className="text-3xl font-bold mb-12">Our Core Values</h2>
+              <EditText
+                contentKey="about.values.title"
+                fallback="Our Core Values"
+                render={(value) => (
+                  <h2 className="text-3xl font-bold mb-12">
+                    {value}
+                  </h2>
+                )}
+              />
               <div className="grid gap-8 md:grid-cols-3">
                 <div>
                   <Award className="h-12 w-12 text-primary mx-auto mb-4" aria-hidden="true" />
-                  <h3 className="text-xl font-semibold mb-2">Quality</h3>
-                  <p className="text-muted-foreground text-sm">
-                    We never compromise on quality. Every project receives our full attention and expertise.
-                  </p>
+                  <EditText
+                    contentKey="about.values.quality.title"
+                    fallback="Quality"
+                    render={(value) => (
+                      <h3 className="text-xl font-semibold mb-2">
+                        {value}
+                      </h3>
+                    )}
+                  />
+                  <EditText
+                    contentKey="about.values.quality.description"
+                    fallback="We never compromise on quality. Every project receives our full attention and expertise."
+                    render={(value) => (
+                      <p className="text-muted-foreground text-sm">
+                        {value}
+                      </p>
+                    )}
+                  />
                 </div>
                 <div>
                   <Target className="h-12 w-12 text-primary mx-auto mb-4" aria-hidden="true" />
-                  <h3 className="text-xl font-semibold mb-2">Innovation</h3>
-                  <p className="text-muted-foreground text-sm">
-                    We stay ahead of trends and technology to deliver cutting-edge solutions.
-                  </p>
+                  <EditText
+                    contentKey="about.values.innovation.title"
+                    fallback="Innovation"
+                    render={(value) => (
+                      <h3 className="text-xl font-semibold mb-2">
+                        {value}
+                      </h3>
+                    )}
+                  />
+                  <EditText
+                    contentKey="about.values.innovation.description"
+                    fallback="We stay ahead of trends and technology to deliver cutting-edge solutions."
+                    render={(value) => (
+                      <p className="text-muted-foreground text-sm">
+                        {value}
+                      </p>
+                    )}
+                  />
                 </div>
                 <div>
                   <Heart className="h-12 w-12 text-primary mx-auto mb-4" aria-hidden="true" />
-                  <h3 className="text-xl font-semibold mb-2">Partnership</h3>
-                  <p className="text-muted-foreground text-sm">
-                    We build lasting relationships based on trust, transparency, and mutual success.
-                  </p>
+                  <EditText
+                    contentKey="about.values.partnership.title"
+                    fallback="Partnership"
+                    render={(value) => (
+                      <h3 className="text-xl font-semibold mb-2">
+                        {value}
+                      </h3>
+                    )}
+                  />
+                  <EditText
+                    contentKey="about.values.partnership.description"
+                    fallback="We build lasting relationships based on trust, transparency, and mutual success."
+                    render={(value) => (
+                      <p className="text-muted-foreground text-sm">
+                        {value}
+                      </p>
+                    )}
+                  />
                 </div>
               </div>
             </div>

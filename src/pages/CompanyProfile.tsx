@@ -3,12 +3,16 @@ import { SEO } from '@/components/SEO'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { LogoWall } from '@/components/LogoWall'
 import { Testimonial } from '@/components/Testimonial'
+import { EditText } from '@/components/EditText'
+import { UploadImage } from '@/components/UploadImage'
+import { useContentValue } from '@/hooks/useSiteContent'
 
 /**
  * Company Profile page component
  * Matches the PDF design with orange/grey color scheme and Century Gothic typography
  */
 export function CompanyProfile() {
+  const logoSrc = useContentValue('site.logo', '/RDL Logo Full Color.png')
   const certifications = [
     {
       id: 'pacra',
@@ -95,29 +99,21 @@ export function CompanyProfile() {
               
               {/* Main Title */}
               <div className="mb-8">
-                <span className="text-white text-lg font-light tracking-wider">Our</span>
-                <div className="inline-block border-2 border-white px-6 py-2 mx-4">
-                  <h1 className="text-white text-3xl md:text-4xl font-bold tracking-wider">
-                    COMPANY PROFILE
-                  </h1>
-                </div>
-                <div className="flex items-center justify-center mt-4">
-                  <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center border-4 border-white">
-                    <span className="text-white text-2xl font-bold">25</span>
-                  </div>
-                  <span className="text-white text-sm font-light ml-2 tracking-wider">TWENTY</span>
-                </div>
+                <h1 className="text-white text-4xl md:text-5xl font-bold tracking-wider">
+                  OUR COMPANY PROFILE
+                </h1>
               </div>
 
               {/* Company Logo Area */}
               <div className="mb-8">
-                <div className="w-32 h-32 bg-white rounded-full mx-auto flex items-center justify-center border-4 border-gray-300 shadow-lg">
+                <div className="w-32 h-32 mx-auto overflow-hidden rounded-full border-4 border-gray-300 bg-white shadow-lg">
                   <img 
-                    src="/RDL Logo Full Color.png" 
+                    src={logoSrc} 
                     alt="RDL Logo" 
-                    className="w-24 h-24 object-contain"
+                    className="w-full h-full object-cover"
                   />
                 </div>
+                <UploadImage contentKey="site.logo" label="Logo" className="block mx-auto mt-4" />
               </div>
 
               {/* Services */}
@@ -155,11 +151,20 @@ export function CompanyProfile() {
                       <Target className="h-6 w-6" />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-800 mb-4">Our Mission</h2>
-                      <p className="text-gray-700 leading-relaxed">
-                        To maintain long-term business relations with our existing and prospective clients 
-                        by providing quality products and services in a professional manner.
-                      </p>
+                      <EditText
+                        contentKey="companyprofile.mission.title"
+                        fallback="Our Mission"
+                        render={(value) => (
+                          <h2 className="text-2xl font-bold text-gray-800 mb-4">{value}</h2>
+                        )}
+                      />
+                      <EditText
+                        contentKey="companyprofile.mission.content"
+                        fallback="To maintain long-term business relations with our existing and prospective clients by providing quality products and services in a professional manner."
+                        render={(value) => (
+                          <p className="text-gray-700 leading-relaxed">{value}</p>
+                        )}
+                      />
                     </div>
                   </div>
                 </div>
@@ -176,11 +181,20 @@ export function CompanyProfile() {
                       <Eye className="h-6 w-6" />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-800 mb-4">Our Vision</h2>
-                      <p className="text-gray-700 leading-relaxed">
-                        To create an enabling environment to our clients by providing solution-based 
-                        products and services in an innovative, professional and efficient manner.
-                      </p>
+                      <EditText
+                        contentKey="companyprofile.vision.title"
+                        fallback="Our Vision"
+                        render={(value) => (
+                          <h2 className="text-2xl font-bold text-gray-800 mb-4">{value}</h2>
+                        )}
+                      />
+                      <EditText
+                        contentKey="companyprofile.vision.content"
+                        fallback="To create an enabling environment to our clients by providing solution-based products and services in an innovative, professional and efficient manner."
+                        render={(value) => (
+                          <p className="text-gray-700 leading-relaxed">{value}</p>
+                        )}
+                      />
                     </div>
                   </div>
                 </div>
@@ -197,21 +211,30 @@ export function CompanyProfile() {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <div className="bg-white rounded-2xl shadow-lg p-8">
-                <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">About Rubexy Designs Limited</h2>
+                <EditText
+                  contentKey="companyprofile.about.title"
+                  fallback="About Rubexy Designs Limited"
+                  render={(value) => (
+                    <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">{value}</h2>
+                  )}
+                />
                 
                 <div className="prose prose-lg max-w-none text-gray-700">
-                  <p className="mb-6">
-                    <strong>Rubexy Designs Limited (RDL)</strong> was established in 2012 as a PACRA business name 
-                    (registered 2013) and incorporated as a Private Company Limited by Shares on{' '}
-                    <strong>December 15, 2021</strong>. From our humble beginnings, we have grown into 
-                    one of Zambia's trusted providers of comprehensive brand, print, and media solutions.
-                  </p>
+                  <EditText
+                    contentKey="companyprofile.about.paragraph1"
+                    fallback="Rubexy Designs Limited (RDL) was established in 2012 as a PACRA business name (registered 2013) and incorporated as a Private Company Limited by Shares on December 15, 2021. From our humble beginnings, we have grown into one of Zambia's trusted providers of comprehensive brand, print, and media solutions."
+                    render={(value) => (
+                      <p className="mb-6">{value}</p>
+                    )}
+                  />
                   
-                  <p className="mb-6">
-                    Based in <strong>FINDECO House, Floor 12, Lusaka</strong>, we serve clients across 
-                    Zambia and beyond. Our commitment to quality, professionalism, and efficiency has 
-                    earned us the trust of leading organizations, government entities, and private businesses.
-                  </p>
+                  <EditText
+                    contentKey="companyprofile.about.paragraph2"
+                    fallback="Based in FINDECO House, Floor 12, Lusaka, we serve clients across Zambia and beyond. Our commitment to quality, professionalism, and efficiency has earned us the trust of leading organizations, government entities, and private businesses."
+                    render={(value) => (
+                      <p className="mb-6">{value}</p>
+                    )}
+                  />
 
                   <div className="bg-orange-50 rounded-lg p-6 mb-6">
                     <h3 className="text-xl font-bold text-gray-800 mb-4">Our Services</h3>
@@ -241,11 +264,13 @@ export function CompanyProfile() {
                     </div>
                   </div>
 
-                  <p className="mb-6">
-                    We are fully compliant with Zambian regulations, holding current certifications from 
-                    PACRA, ZRA (Tax Clearance valid through December 2025), NAPSA (valid through June 2025), 
-                    and ZPPA supplier registration (valid through March 2026).
-                  </p>
+                  <EditText
+                    contentKey="companyprofile.about.paragraph3"
+                    fallback="We are fully compliant with Zambian regulations, holding current certifications from PACRA, ZRA (Tax Clearance valid through December 2025), NAPSA (valid through June 2025), and ZPPA supplier registration (valid through March 2026)."
+                    render={(value) => (
+                      <p className="mb-6">{value}</p>
+                    )}
+                  />
 
                   <div className="text-center">
                     <p className="text-orange-600 font-bold text-lg">

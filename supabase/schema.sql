@@ -13,6 +13,11 @@ create table if not exists public.portfolio_items (
   id uuid primary key default gen_random_uuid(),
   title text not null default '',
   image_url text not null default '',
+  images text[] not null default '{}',
+  category text not null default 'Portfolio',
+  description text not null default '',
+  client text,
+  year integer,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );

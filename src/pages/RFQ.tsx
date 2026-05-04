@@ -2,6 +2,7 @@ import { FileText } from 'lucide-react'
 import { RFQForm } from '@/components/RFQForm'
 import { Card, CardContent } from '@/components/ui/card'
 import { SEO } from '@/components/SEO'
+import { EditText } from '@/components/EditText'
 
 /**
  * Request for Quote (RFQ) page component
@@ -22,10 +23,20 @@ export function RFQ() {
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl text-center">
               <FileText className="h-16 w-16 text-primary mx-auto mb-6" aria-hidden="true" />
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">Request a Quote</h1>
-              <p className="text-xl text-muted-foreground">
-                Tell us about your project and we'll get back to you within 24 hours
-              </p>
+              <EditText
+                contentKey="rfq.hero.title"
+                fallback="Request a Quote"
+                render={(value) => (
+                  <h1 className="text-4xl md:text-5xl font-bold mb-6">{value}</h1>
+                )}
+              />
+              <EditText
+                contentKey="rfq.hero.subtitle"
+                fallback="Tell us about your project and we'll get back to you within 24 hours"
+                render={(value) => (
+                  <p className="text-xl text-muted-foreground">{value}</p>
+                )}
+              />
             </div>
           </div>
         </section>

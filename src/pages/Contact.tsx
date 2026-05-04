@@ -2,12 +2,17 @@ import { Mail, Phone, MapPin, Clock } from 'lucide-react'
 import { ContactForm } from '@/components/ContactForm'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { SEO } from '@/components/SEO'
+import { EditText } from '@/components/EditText'
+import { UploadImage } from '@/components/UploadImage'
+import { useContentValue } from '@/hooks/useSiteContent'
 
 /**
  * Contact page component
  * Features contact form, office address, map, and contact information
  */
 export function Contact() {
+  const logoSrc = useContentValue('site.logo', '/RDL Logo Full Color.png')
+
   return (
     <>
       <SEO
@@ -21,17 +26,28 @@ export function Contact() {
         <section className="bg-gradient-to-br from-gray-50 to-orange-50 py-20">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl text-center">
-              <div className="w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+              <div className="w-24 h-24 mx-auto mb-6 overflow-hidden rounded-full bg-white shadow-lg">
                 <img 
-                  src="/RDL Logo Full Color.png" 
+                  src={logoSrc} 
                   alt="RDL Logo" 
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                 />
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6 font-brand">Contact Us</h1>
-              <p className="text-xl text-gray-600 font-brand">
-                Let's discuss how we can help bring your vision to life
-              </p>
+              <UploadImage contentKey="site.logo" label="Logo" className="block mx-auto mb-6" />
+              <EditText
+                contentKey="contact.hero.title"
+                fallback="Contact Us"
+                render={(value) => (
+                  <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6 font-brand">{value}</h1>
+                )}
+              />
+              <EditText
+                contentKey="contact.hero.subtitle"
+                fallback="Let's discuss how we can help bring your vision to life"
+                render={(value) => (
+                  <p className="text-xl text-gray-600 font-brand">{value}</p>
+                )}
+              />
             </div>
           </div>
         </section>
@@ -42,18 +58,33 @@ export function Contact() {
             <div className="grid gap-12 lg:grid-cols-2 max-w-6xl mx-auto">
               {/* Contact form */}
               <div>
-                <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
+                <EditText
+                  contentKey="contact.form.title"
+                  fallback="Send Us a Message"
+                  render={(value) => (
+                    <h2 className="text-2xl font-bold mb-6">{value}</h2>
+                  )}
+                />
                 <ContactForm />
               </div>
 
               {/* Contact information */}
               <div className="space-y-6">
                 <div>
-                  <h2 className="text-2xl font-bold mb-6">Get in Touch</h2>
-                  <p className="text-muted-foreground mb-8">
-                    Have a question or want to discuss a project? We'd love to hear from you. 
-                    Fill out the form or reach us through any of the contact methods below.
-                  </p>
+                  <EditText
+                    contentKey="contact.info.title"
+                    fallback="Get in Touch"
+                    render={(value) => (
+                      <h2 className="text-2xl font-bold mb-6">{value}</h2>
+                    )}
+                  />
+                  <EditText
+                    contentKey="contact.info.description"
+                    fallback="Have a question or want to discuss a project? We'd love to hear from you. Fill out the form or reach us through any of the contact methods below."
+                    render={(value) => (
+                      <p className="text-muted-foreground mb-8">{value}</p>
+                    )}
+                  />
                 </div>
 
                 <div className="space-y-4">

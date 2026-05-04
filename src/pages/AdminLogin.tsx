@@ -10,17 +10,17 @@ const ADMIN_EMAIL = 'rubexydesigns@gmail.com'
 
 export function AdminLogin() {
   const navigate = useNavigate()
-  const { isAdmin } = useAuth()
+  const { user } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
-    if (isAdmin) {
+    if (user) {
       navigate('/')
     }
-  }, [isAdmin, navigate])
+  }, [user, navigate])
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()

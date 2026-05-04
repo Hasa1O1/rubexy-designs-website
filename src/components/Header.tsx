@@ -30,11 +30,11 @@ export function Header() {
         {/* Logo */}
         <div className="relative flex items-center">
           <Link to="/" className="flex items-center space-x-3">
-            <div className="w-12 h-12 flex items-center justify-center">
+            <div className="w-12 h-12 overflow-hidden rounded-full bg-white shadow-sm">
               <img
                 src={logoSrc}
                 alt="RDL Logo"
-                className="w-full h-full object-contain"
+                className="w-full h-full object-cover"
               />
             </div>
             <div className="flex flex-col">

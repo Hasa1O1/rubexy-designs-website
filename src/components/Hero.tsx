@@ -57,11 +57,29 @@ export function Hero() {
           {/* Services */}
           <div className="mt-8 mb-12">
             <div className="flex items-center justify-center space-x-4 text-white">
-              <span className="text-lg font-bold tracking-wider font-brand">PRINT</span>
+              <EditText
+                contentKey="home.hero.service.print"
+                fallback="PRINT"
+                render={(value) => (
+                  <span className="text-lg font-bold tracking-wider font-brand">{value}</span>
+                )}
+              />
               <div className="w-1 h-6 bg-orange-500"></div>
-              <span className="text-lg font-bold tracking-wider font-brand">BRAND</span>
+              <EditText
+                contentKey="home.hero.service.brand"
+                fallback="BRAND"
+                render={(value) => (
+                  <span className="text-lg font-bold tracking-wider font-brand">{value}</span>
+                )}
+              />
               <div className="w-1 h-6 bg-orange-500"></div>
-              <span className="text-lg font-bold tracking-wider font-brand">MEDIA</span>
+              <EditText
+                contentKey="home.hero.service.media"
+                fallback="MEDIA"
+                render={(value) => (
+                  <span className="text-lg font-bold tracking-wider font-brand">{value}</span>
+                )}
+              />
             </div>
           </div>
 
@@ -82,18 +100,54 @@ export function Hero() {
           </div>
 
           {/* Service clusters */}
-          <div className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div className="rounded-2xl border-2 border-orange-200 bg-white/10 backdrop-blur p-6 text-left shadow-lg">
-              <h3 className="text-lg font-semibold text-white font-brand">Brand & Print</h3>
-              <p className="mt-2 text-sm text-gray-300 font-brand">
-                Books, magazines, corporate wear, vehicle branding, billboards, signage, and more.
-              </p>
+              <EditText
+                contentKey="home.hero.cluster.print.title"
+                fallback="Print"
+                render={(value) => (
+                  <h3 className="text-lg font-semibold text-white font-brand">{value}</h3>
+                )}
+              />
+              <EditText
+                contentKey="home.hero.cluster.print.description"
+                fallback="High quality print production for business stationery, marketing materials, and signage."
+                render={(value) => (
+                  <p className="mt-2 text-sm text-gray-300 font-brand">{value}</p>
+                )}
+              />
             </div>
             <div className="rounded-2xl border-2 border-orange-200 bg-white/10 backdrop-blur p-6 text-left shadow-lg">
-              <h3 className="text-lg font-semibold text-white font-brand">Media</h3>
-              <p className="mt-2 text-sm text-gray-300 font-brand">
-                Professional photography, documentaries, and video advertising.
-              </p>
+              <EditText
+                contentKey="home.hero.cluster.brand.title"
+                fallback="Brand"
+                render={(value) => (
+                  <h3 className="text-lg font-semibold text-white font-brand">{value}</h3>
+                )}
+              />
+              <EditText
+                contentKey="home.hero.cluster.brand.description"
+                fallback="Creative brand identity, corporate wear, and vehicle graphics that help your business stand out."
+                render={(value) => (
+                  <p className="mt-2 text-sm text-gray-300 font-brand">{value}</p>
+                )}
+              />
+            </div>
+            <div className="rounded-2xl border-2 border-orange-200 bg-white/10 backdrop-blur p-6 text-left shadow-lg">
+              <EditText
+                contentKey="home.hero.cluster.media.title"
+                fallback="Media"
+                render={(value) => (
+                  <h3 className="text-lg font-semibold text-white font-brand">{value}</h3>
+                )}
+              />
+              <EditText
+                contentKey="home.hero.cluster.media.description"
+                fallback="Professional photography, documentaries, and video advertising."
+                render={(value) => (
+                  <p className="mt-2 text-sm text-gray-300 font-brand">{value}</p>
+                )}
+              />
             </div>
           </div>
 

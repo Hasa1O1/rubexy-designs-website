@@ -12,17 +12,22 @@ import { Link } from 'react-router-dom'
 import { ServiceCard } from '@/components/ServiceCard'
 import { Button } from '@/components/ui/button'
 import { SEO } from '@/components/SEO'
+import { EditText } from '@/components/EditText'
+import { UploadImage } from '@/components/UploadImage'
+import { useContentValue } from '@/hooks/useSiteContent'
 
 /**
  * Services page component
  * Displays printing, branding, and media services
  */
 export function Services() {
+  const logoSrc = useContentValue('site.logo', '/RDL Logo Full Color.png')
   const printServices = [
     {
       icon: Printer,
       title: 'Printing Services',
       description: 'Professional printing for all your business needs',
+      contentKey: 'services.print.card.printing',
       items: [
         'Books and magazines',
         'Posters and flyers',
@@ -31,11 +36,20 @@ export function Services() {
         'Letterheads and invoices',
         'Quotations and forms',
       ],
+      itemKeys: [
+        'services.print.card.printing.item1',
+        'services.print.card.printing.item2',
+        'services.print.card.printing.item3',
+        'services.print.card.printing.item4',
+        'services.print.card.printing.item5',
+        'services.print.card.printing.item6',
+      ],
     },
     {
       icon: FileText,
       title: 'Publications & Reports',
       description: 'Premium publishing for corporate and marketing materials',
+      contentKey: 'services.print.card.publications',
       items: [
         'Annual reports & brochures',
         'Corporate profiles',
@@ -44,11 +58,20 @@ export function Services() {
         'Catalogues and menu books',
         'Technical documentation',
       ],
+      itemKeys: [
+        'services.print.card.publications.item1',
+        'services.print.card.publications.item2',
+        'services.print.card.publications.item3',
+        'services.print.card.publications.item4',
+        'services.print.card.publications.item5',
+        'services.print.card.publications.item6',
+      ],
     },
     {
       icon: Award,
       title: 'Large Format Printing',
       description: 'High-impact displays for indoor and outdoor visibility',
+      contentKey: 'services.print.card.largeFormat',
       items: [
         'Billboards and light boxes',
         'Pop-up and roll-up banners',
@@ -56,6 +79,14 @@ export function Services() {
         'Event backdrops',
         'Window & floor graphics',
         'Wayfinding signage',
+      ],
+      itemKeys: [
+        'services.print.card.largeFormat.item1',
+        'services.print.card.largeFormat.item2',
+        'services.print.card.largeFormat.item3',
+        'services.print.card.largeFormat.item4',
+        'services.print.card.largeFormat.item5',
+        'services.print.card.largeFormat.item6',
       ],
     },
   ]
@@ -65,6 +96,7 @@ export function Services() {
       icon: Shirt,
       title: 'Corporate Wear',
       description: 'Professional uniforms and branded apparel',
+      contentKey: 'services.branding.card.corporateWear',
       items: [
         'T-shirt printing',
         'Corporate wear supply',
@@ -73,11 +105,20 @@ export function Services() {
         'Branded merchandise',
         'Custom apparel',
       ],
+      itemKeys: [
+        'services.branding.card.corporateWear.item1',
+        'services.branding.card.corporateWear.item2',
+        'services.branding.card.corporateWear.item3',
+        'services.branding.card.corporateWear.item4',
+        'services.branding.card.corporateWear.item5',
+        'services.branding.card.corporateWear.item6',
+      ],
     },
     {
       icon: Car,
       title: 'Vehicle Branding',
       description: 'Turn your fleet into mobile advertisements',
+      contentKey: 'services.branding.card.vehicleBranding',
       items: [
         'Full vehicle wraps',
         'Partial vehicle graphics',
@@ -85,6 +126,14 @@ export function Services() {
         'Magnetic signs',
         'Window decals',
         'Design and installation',
+      ],
+      itemKeys: [
+        'services.branding.card.vehicleBranding.item1',
+        'services.branding.card.vehicleBranding.item2',
+        'services.branding.card.vehicleBranding.item3',
+        'services.branding.card.vehicleBranding.item4',
+        'services.branding.card.vehicleBranding.item5',
+        'services.branding.card.vehicleBranding.item6',
       ],
     },
   ]
@@ -94,6 +143,7 @@ export function Services() {
       icon: Camera,
       title: 'Photography',
       description: 'Professional photography for every occasion',
+      contentKey: 'services.media.card.photography',
       items: [
         'Corporate headshots',
         'Event photography',
@@ -102,11 +152,20 @@ export function Services() {
         'Team photos',
         'Marketing photography',
       ],
+      itemKeys: [
+        'services.media.card.photography.item1',
+        'services.media.card.photography.item2',
+        'services.media.card.photography.item3',
+        'services.media.card.photography.item4',
+        'services.media.card.photography.item5',
+        'services.media.card.photography.item6',
+      ],
     },
     {
       icon: Video,
       title: 'Videography & Documentaries',
       description: 'Tell your story through compelling video',
+      contentKey: 'services.media.card.video',
       items: [
         'Documentary production',
         'Video advertisements',
@@ -114,6 +173,14 @@ export function Services() {
         'Event coverage',
         'Training videos',
         'Promotional content',
+      ],
+      itemKeys: [
+        'services.media.card.video.item1',
+        'services.media.card.video.item2',
+        'services.media.card.video.item3',
+        'services.media.card.video.item4',
+        'services.media.card.video.item5',
+        'services.media.card.video.item6',
       ],
     },
   ]
@@ -131,17 +198,32 @@ export function Services() {
         <section className="bg-gradient-to-br from-gray-50 to-orange-50 py-20">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl text-center">
-              <div className="w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+              <div className="w-24 h-24 mx-auto mb-6 overflow-hidden rounded-full bg-white shadow-lg">
                 <img 
-                  src="/RDL Logo Full Color.png" 
+                  src={logoSrc} 
                   alt="RDL Logo" 
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                 />
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6 font-brand">Our Services</h1>
-              <p className="text-xl text-gray-600 font-brand">
-                Comprehensive brand, print, and media solutions tailored to your business needs
-              </p>
+              <UploadImage contentKey="site.logo" label="Logo" className="block mx-auto mb-6" />
+              <EditText
+                contentKey="services.hero.title"
+                fallback="Our Services"
+                render={(value) => (
+                  <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6 font-brand">
+                    {value}
+                  </h1>
+                )}
+              />
+              <EditText
+                contentKey="services.hero.subtitle"
+                fallback="Comprehensive brand, print, and media solutions tailored to your business needs"
+                render={(value) => (
+                  <p className="text-xl text-gray-600 font-brand">
+                    {value}
+                  </p>
+                )}
+              />
             </div>
           </div>
         </section>
@@ -154,13 +236,24 @@ export function Services() {
                 <Printer className="h-5 w-5 text-primary" aria-hidden="true" />
                 <span className="text-sm font-medium text-primary">Print</span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Print Production Excellence
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                From short-run digital to long-run offset, we deliver crisp print quality with
-                professional finishing that elevates your business communication.
-              </p>
+              <EditText
+                contentKey="services.print.title"
+                fallback="Print Production Excellence"
+                render={(value) => (
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                    {value}
+                  </h2>
+                )}
+              />
+              <EditText
+                contentKey="services.print.description"
+                fallback="From short-run digital to long-run offset, we deliver crisp print quality with professional finishing that elevates your business communication."
+                render={(value) => (
+                  <p className="text-muted-foreground max-w-2xl mx-auto">
+                    {value}
+                  </p>
+                )}
+              />
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -179,12 +272,24 @@ export function Services() {
                 <Palette className="h-5 w-5 text-primary" aria-hidden="true" />
                 <span className="text-sm font-medium text-primary">Brand</span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Branding & Identity Solutions
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Build trust with a cohesive brand touchpoint—from signage and uniforms to vehicle graphics and interior experiences.
-              </p>
+              <EditText
+                contentKey="services.branding.title"
+                fallback="Branding & Identity Solutions"
+                render={(value) => (
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                    {value}
+                  </h2>
+                )}
+              />
+              <EditText
+                contentKey="services.branding.description"
+                fallback="Build trust with a cohesive brand touchpoint—from signage and uniforms to vehicle graphics and interior experiences."
+                render={(value) => (
+                  <p className="text-muted-foreground max-w-2xl mx-auto">
+                    {value}
+                  </p>
+                )}
+              />
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -203,13 +308,24 @@ export function Services() {
                 <FileText className="h-5 w-5 text-primary" aria-hidden="true" />
                 <span className="text-sm font-medium text-primary">Media</span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Media Production
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Professional photography and videography services to capture your brand's story
-                and create compelling visual content.
-              </p>
+              <EditText
+                contentKey="services.media.title"
+                fallback="Media Production"
+                render={(value) => (
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                    {value}
+                  </h2>
+                )}
+              />
+              <EditText
+                contentKey="services.media.description"
+                fallback="Professional photography and videography services to capture your brand's story and create compelling visual content."
+                render={(value) => (
+                  <p className="text-muted-foreground max-w-2xl mx-auto">
+                    {value}
+                  </p>
+                )}
+              />
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
@@ -224,13 +340,24 @@ export function Services() {
         <section className="py-20">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl rounded-2xl border-2 border-primary bg-primary/5 p-8 md:p-12 text-center">
-              <h2 className="text-3xl font-bold mb-4">
-                Need a Custom Solution?
-              </h2>
-              <p className="text-muted-foreground mb-8">
-                Can't find exactly what you're looking for? We specialize in custom solutions
-                tailored to your specific needs. Let's discuss your project.
-              </p>
+              <EditText
+                contentKey="services.cta.title"
+                fallback="Need a Custom Solution?"
+                render={(value) => (
+                  <h2 className="text-3xl font-bold mb-4">
+                    {value}
+                  </h2>
+                )}
+              />
+              <EditText
+                contentKey="services.cta.description"
+                fallback="Can't find exactly what you're looking for? We specialize in custom solutions tailored to your specific needs. Let's discuss your project."
+                render={(value) => (
+                  <p className="text-muted-foreground mb-8">
+                    {value}
+                  </p>
+                )}
+              />
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild size="lg">
                   <Link to="/contact">Contact Us</Link>

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Heart } from 'lucide-react'
 import { SEO } from '@/components/SEO'
 import { usePortfolioItems } from '@/hooks/usePortfolioItems'
+import { EditText } from '@/components/EditText'
 
 /**
  * Home page component
@@ -107,10 +108,24 @@ export function Home() {
         <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold">Featured Work</h2>
-              <p className="text-muted-foreground mt-2">
-                Explore some of our recent projects
-              </p>
+              <EditText
+                contentKey="home.featured.title"
+                fallback="Featured Work"
+                render={(value) => (
+                  <h2 className="text-3xl md:text-4xl font-bold">
+                    {value}
+                  </h2>
+                )}
+              />
+              <EditText
+                contentKey="home.featured.description"
+                fallback="Explore some of our recent projects"
+                render={(value) => (
+                  <p className="text-muted-foreground mt-2">
+                    {value}
+                  </p>
+                )}
+              />
             </div>
             <PortfolioGrid items={visibleFeaturedPortfolio} showFilters={false} />
             <div className="text-center mt-12">
@@ -129,12 +144,24 @@ export function Home() {
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl text-center">
               <Heart className="h-12 w-12 text-orange-500 mx-auto mb-4" aria-hidden="true" />
-              <h2 className="text-3xl font-bold mb-4 text-gray-800 font-brand">Corporate Social Responsibility</h2>
-              <p className="text-gray-700 font-brand">
-                Proud media partner in cancer-awareness initiatives supporting{' '}
-                <strong>Breakthrough Cancer Trust</strong>. We believe in using our skills to make
-                a positive impact in our community.
-              </p>
+              <EditText
+                contentKey="home.csr.title"
+                fallback="Corporate Social Responsibility"
+                render={(value) => (
+                  <h2 className="text-3xl font-bold mb-4 text-gray-800 font-brand">
+                    {value}
+                  </h2>
+                )}
+              />
+              <EditText
+                contentKey="home.csr.description"
+                fallback="Proud media partner in cancer-awareness initiatives supporting Breakthrough Cancer Trust. We believe in using our skills to make a positive impact in our community."
+                render={(value) => (
+                  <p className="text-gray-700 font-brand">
+                    {value}
+                  </p>
+                )}
+              />
             </div>
           </div>
         </section>
@@ -142,12 +169,24 @@ export function Home() {
         {/* Contact CTA */}
         <section className="py-20 bg-orange-500 text-white">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-brand">
-              Ready to Start Your Project?
-            </h2>
-            <p className="text-lg mb-8 opacity-90 font-brand">
-              Let's discuss how we can help bring your vision to life
-            </p>
+            <EditText
+              contentKey="home.cta.title"
+              fallback="Ready to Start Your Project?"
+              render={(value) => (
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 font-brand">
+                  {value}
+                </h2>
+              )}
+            />
+            <EditText
+              contentKey="home.cta.description"
+              fallback="Let's discuss how we can help bring your vision to life"
+              render={(value) => (
+                <p className="text-lg mb-8 opacity-90 font-brand">
+                  {value}
+                </p>
+              )}
+            />
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" variant="secondary" className="bg-white text-orange-500 hover:bg-gray-100 font-brand">
                 <Link to="/contact">Contact Us</Link>
