@@ -20,7 +20,7 @@ A modern, professional website for Rubexy Designs Limited - a Zambian design com
 - **Forms**: React Hook Form + Zod validation
 - **Routing**: React Router v6
 - **Testing**: Vitest + React Testing Library
-- **Deployment**: Vercel/Netlify ready
+- **Deployment**: Render static hosting ready
 
 ## 📋 Features
 
@@ -29,8 +29,8 @@ A modern, professional website for Rubexy Designs Limited - a Zambian design com
 - ✅ **SEO Optimized**: Meta tags, OpenGraph, JSON-LD structured data
 - ✅ **Performance**: Lighthouse score ≥ 90, lazy loading, code splitting
 - ✅ **Modern UI**: Clean design matching company profile aesthetic
-- ✅ **Contact Forms**: Serverless API endpoints with spam protection
-- ✅ **Portfolio**: MDX-based case studies and project showcases
+- ✅ **Contact Forms**: Client-side validation with email handoff
+- ✅ **Portfolio**: Static project showcase ready for CMS migration
 - ✅ **Certifications**: Display of PACRA, ZRA, NAPSA, ZPPA compliance
 
 ## 🛠️ Development Setup
@@ -108,106 +108,11 @@ content/                # MDX content files
 ├── portfolio/         # Portfolio case studies
 └── news/             # News and updates
 
-api/                   # Serverless API endpoints
-├── contact.ts         # Contact form handler
-└── rfq.ts            # RFQ form handler
 ```
 
-## Supabase Admin Panel Setup
+## CMS Backend
 
-This project supports an admin panel that lets authorized admin users upload portfolio images to Supabase Storage and store portfolio metadata in a Supabase table.
-
-1. Create a Supabase project at https://app.supabase.com and copy the `Project URL` and `anon key`.
-2. Add the following environment variables to your `.env` (for local) and to Render's environment variables:
-
-```
-VITE_SUPABASE_URL=https://your-project-ref.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key
-```
-
-3. In the project root you'll find a `supabase/` folder with SQL scripts you should run in order from the Supabase SQL editor:
-
-- `supabase/schema.sql` — creates the `profiles` and `portfolio` tables
-- `supabase/policies.sql` — enables RLS and creates policies that allow public SELECT on `portfolio` and restrict INSERT/UPDATE/DELETE to admin users
-- `supabase/storage.sql` — example storage policies for the `portfolio-images` bucket (see note below)
-
-4. Create a Storage bucket named `portfolio-images` in the Supabase Dashboard (Storage → Create bucket). If you want public URLs, enable public read for the bucket; otherwise keep it private and use signed URLs.
-
-5. Run `supabase/schema.sql` then `supabase/policies.sql` in the SQL editor. For storage policies, either run `supabase/storage.sql` or create equivalent policies using Dashboard → Storage → Policies (the Dashboard UI is recommended if SQL execution on `storage.objects` is restricted).
-
-6. Create the four admin users in Supabase Auth (Dashboard → Authentication → Users). For each admin user, insert or update a row in `public.profiles` with `is_admin = true`. Example:
-
-```sql
--- Replace <user-uuid> with the user's id from Auth
-INSERT INTO public.profiles (id, full_name, is_admin) VALUES ('<user-uuid>', 'Admin Name', true);
--- Or update an existing profile
-UPDATE public.profiles SET is_admin = true WHERE id = '<user-uuid>';
-```
-
-7. Add these environment variables locally and in Render (Service → Environment):
-
-```
-VITE_SUPABASE_URL=https://your-project-ref.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key
-```
-
-8. Install and run locally:
-
-```powershell
-npm install
-npm run dev
-```
-
-9. Verify behavior:
-- Login as an admin via `/admin/login` and confirm each portfolio card shows `Upload Image` and `Edit` controls.
-- Upload an image and confirm a new object appears in the `portfolio-images` bucket and the `portfolio` row updates with `images` and `image_url`.
-- Login as a non-admin user and confirm admin controls are hidden and RLS prevents mutation attempts.
-
-If you need help, run the SQL scripts in the order described and share any errors you see — I can help interpret them.
-
-### SUPABASE SQL (run in Supabase SQL editor)
-
--- enable pgcrypto for uuid generation
-CREATE EXTENSION IF NOT EXISTS "pgcrypto";
-
--- profiles table (extends auth.users)
-CREATE TABLE IF NOT EXISTS profiles (
-   id uuid REFERENCES auth.users NOT NULL,
-   is_admin boolean DEFAULT false,
-   full_name text,
-   created_at timestamptz DEFAULT now(),
-   PRIMARY KEY (id)
-);
-
--- portfolio table
-CREATE TABLE IF NOT EXISTS portfolio (
-   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-   title text NOT NULL,
-   description text,
-   image_url text,
-   created_at timestamptz DEFAULT now()
-);
-
--- Enable RLS on portfolio
-ALTER TABLE portfolio ENABLE ROW LEVEL SECURITY;
-
--- Allow anyone to SELECT portfolio
-CREATE POLICY "public_select" ON portfolio FOR SELECT USING (true);
-
--- Allow only admins (profiles.is_admin = true) to INSERT/UPDATE/DELETE
-CREATE POLICY "admins_manage" ON portfolio FOR INSERT USING (
-   EXISTS (SELECT 1 FROM profiles p WHERE p.id = auth.uid() AND p.is_admin)
-);
-CREATE POLICY "admins_update" ON portfolio FOR UPDATE USING (
-   EXISTS (SELECT 1 FROM profiles p WHERE p.id = auth.uid() AND p.is_admin)
-);
-CREATE POLICY "admins_delete" ON portfolio FOR DELETE USING (
-   EXISTS (SELECT 1 FROM profiles p WHERE p.id = auth.uid() AND p.is_admin)
-);
-
--- Storage policies
--- Note: In the Supabase Storage policy editor, enable object RLS and add policies that allow select to public, and insert/update/delete only to admin users by checking profiles.is_admin = true for auth.uid().
-
+The previous Supabase admin panel and serverless API setup has been removed. A new Supabase CMS will be added incrementally using Auth, Database, Storage, and React Query.
 
 ## 🎨 Design System
 
@@ -242,10 +147,10 @@ CREATE POLICY "admins_delete" ON portfolio FOR DELETE USING (
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
-1. Connect your GitHub repository to Vercel
-2. Configure environment variables if needed
-3. Deploy automatically on push to main branch
+### Render
+1. Connect your GitHub repository to Render
+2. Use the existing `render.yaml` static site configuration
+3. Configure Supabase environment variables after the CMS client is added
 
 ### Netlify
 1. Connect your GitHub repository to Netlify

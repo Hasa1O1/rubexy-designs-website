@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { Menu, X, ChevronRight } from 'lucide-react'
+import { UploadImage } from '@/components/UploadImage'
 import { Button } from '@/components/ui/button'
+import { useContentValue } from '@/hooks/useSiteContent'
 import { cn } from '@/lib/utils'
 
 /**
@@ -11,6 +13,7 @@ import { cn } from '@/lib/utils'
  */
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const logoSrc = useContentValue('site.logo', '/RDL Logo Full Color.png')
 
   const navLinks = [
     { to: '/', label: 'Home' },
@@ -25,19 +28,26 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full bg-white shadow-lg border-b-2 border-orange-500">
       <nav className="container mx-auto flex h-16 items-center justify-between px-4" aria-label="Main navigation">
         {/* Logo */}
-        <Link to="/" className="flex items-center space-x-3">
-          <div className="w-12 h-12 flex items-center justify-center">
-            <img 
-              src="/RDL Logo Full Color.png" 
-              alt="RDL Logo" 
-              className="w-full h-full object-contain"
-            />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-xl font-bold text-gray-800 font-brand">Rubexy Designs</span>
-            <span className="text-xs text-orange-600 font-medium">Creativity Unlimited</span>
-          </div>
-        </Link>
+        <div className="relative flex items-center">
+          <Link to="/" className="flex items-center space-x-3">
+            <div className="w-12 h-12 flex items-center justify-center">
+              <img
+                src={logoSrc}
+                alt="RDL Logo"
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xl font-bold text-gray-800 font-brand">Rubexy Designs</span>
+              <span className="text-xs text-orange-600 font-medium">Creativity Unlimited</span>
+            </div>
+          </Link>
+          <UploadImage
+            contentKey="site.logo"
+            label="Logo"
+            className="absolute left-0 top-full mt-2 z-50"
+          />
+        </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex md:items-center md:gap-6">

@@ -98,29 +98,28 @@ export function RFQForm() {
     setIsSubmitting(true)
 
     try {
-      // Create FormData for file upload
-      const formData = new FormData()
-      Object.entries(data).forEach(([key, value]) => {
-        if (value) formData.append(key, value)
-      })
-      
-      if (selectedFile) {
-        formData.append('file', selectedFile)
-      }
-
-      // Submit to API
-      const response = await fetch('/api/rfq', {
-        method: 'POST',
-        body: formData,
-      })
-
-      if (!response.ok) {
-        throw new Error('Submission failed')
-      }
+      const subject = encodeURIComponent(`Quote request: ${data.service} - ${data.company}`)
+      const body = encodeURIComponent(
+        [
+          `Name: ${data.name}`,
+          `Email: ${data.email}`,
+          `Phone: ${data.phone}`,
+          `Company: ${data.company}`,
+          `Service: ${data.service}`,
+          `Quantity: ${data.quantity}`,
+          `Deadline: ${data.deadline || 'Not specified'}`,
+          selectedFile ? `Attachment to add manually: ${selectedFile.name}` : 'Attachment: none',
+          '',
+          data.specifications,
+        ].join('\n')
+      )
+      window.location.href = `mailto:rubexydesigns@gmail.com?subject=${subject}&body=${body}`
 
       toast({
-        title: 'Quote request sent!',
-        description: 'We\'ll review your requirements and get back to you within 24 hours.',
+        title: 'Email draft opened',
+        description: selectedFile
+          ? 'Please attach your selected file before sending the email.'
+          : 'Please send the email from your mail app to complete your quote request.',
       })
 
       reset()

@@ -1,122 +1,71 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import supabase from '@/lib/supabase'
+import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react'
+import type { User } from '@supabase/supabase-js'
+import { supabase } from '@/lib/supabase'
 
-type User = any
+const ADMIN_EMAIL = 'rubexydesigns@gmail.com'
 
 interface AuthContextValue {
   user: User | null
   isAdmin: boolean
-  loading: boolean
-  signIn: (email: string, password: string) => Promise<{ error?: any }>
+  isLoading: boolean
   signOut: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined)
 
-export function useAuth() {
-  const ctx = useContext(AuthContext)
-  if (!ctx) throw new Error('useAuth must be used within AuthProvider')
-  return ctx
-}
-
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
-  const [isAdmin, setIsAdmin] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    let mounted = true
+    let isMounted = true
 
-    async function load() {
-      const { data: { user: currentUser } = {} } = await supabase.auth.getUser()
-      if (!mounted) return
-      setUser(currentUser ?? null)
+    async function loadSession() {
+      const { data } = await supabase.auth.getSession()
 
-      if (currentUser) {
-        try {
-          const { data, error } = await supabase
-            .from('profiles')
-            .select('is_admin')
-            .eq('id', currentUser.id)
-            .single()
+      if (!isMounted) return
 
-          if (error) {
-            console.warn('Could not read profile for current user:', error.message || error)
-            setIsAdmin(false)
-          } else if (data) {
-            setIsAdmin(Boolean(data.is_admin))
-          }
-        } catch (err) {
-          console.warn('Error querying profiles table:', err)
-          setIsAdmin(false)
-        }
-      }
-
-      setLoading(false)
+      setUser(data.session?.user ?? null)
+      setIsLoading(false)
     }
 
-    load()
+    loadSession()
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      const currentUser = session?.user ?? null
-      setUser(currentUser)
-
-      if (!currentUser) {
-        setIsAdmin(false)
-        setLoading(false)
-        return
-      }
-
-      ;(async () => {
-        try {
-          const { data, error } = await supabase
-            .from('profiles')
-            .select('is_admin')
-            .eq('id', currentUser.id)
-            .single()
-
-          if (error) {
-            console.warn('Could not read profile for current user:', error.message || error)
-            setIsAdmin(false)
-          } else if (data) {
-            setIsAdmin(Boolean(data.is_admin))
-          }
-        } catch (err) {
-          console.warn('Error querying profiles table:', err)
-          setIsAdmin(false)
-        }
-      })()
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+      setIsLoading(false)
     })
 
     return () => {
-      mounted = false
-      listener?.subscription?.unsubscribe()
+      isMounted = false
+      subscription.unsubscribe()
     }
   }, [])
 
-  // expose admin flag globally for legacy components (if needed)
-  useEffect(() => {
-    try {
-      ;(window as any).__isAdmin = isAdmin
-    } catch (e) {
-      // noop in non-browser environments
+  const value = useMemo<AuthContextValue>(() => {
+    const email = user?.email?.toLowerCase() ?? ''
+
+    return {
+      user,
+      isAdmin: email === ADMIN_EMAIL,
+      isLoading,
+      signOut: async () => {
+        await supabase.auth.signOut()
+      },
     }
-  }, [isAdmin])
-
-  async function signIn(email: string, password: string) {
-    const res = await supabase.auth.signInWithPassword({ email, password })
-    if (res.error) return { error: res.error }
-    // profile check will happen via auth state change
-    return {}
-  }
-
-  async function signOut() {
-    await supabase.auth.signOut()
-    setUser(null)
-    setIsAdmin(false)
-  }
-
-  const value: AuthContextValue = { user, isAdmin, loading, signIn, signOut }
+  }, [isLoading, user])
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext)
+
+  if (!context) {
+    throw new Error('useAuth must be used inside AuthProvider')
+  }
+
+  return context
 }

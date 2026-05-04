@@ -1,54 +1,95 @@
-import React, { useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { useAuth } from '@/contexts/AuthContext'
+import { supabase } from '@/lib/supabase'
 
-export default function AdminLogin() {
+const ADMIN_EMAIL = 'rubexydesigns@gmail.com'
+
+export function AdminLogin() {
+  const navigate = useNavigate()
+  const { isAdmin } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
-  const auth = useAuth()
-  const navigate = useNavigate()
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  async function onSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setLoading(true)
+  useEffect(() => {
+    if (isAdmin) {
+      navigate('/')
+    }
+  }, [isAdmin, navigate])
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
     setError(null)
-    const res = await auth.signIn(email, password)
-    setLoading(false)
-    if (res.error) {
-      setError(res.error.message || 'Sign in failed')
+
+    const normalizedEmail = email.trim().toLowerCase()
+
+    if (normalizedEmail !== ADMIN_EMAIL) {
+      setError('This email is not authorized for admin access.')
       return
     }
 
-    // wait a moment for auth state to update
-    setTimeout(() => {
-      if (auth.isAdmin) navigate('/')
-    }, 500)
+    setIsSubmitting(true)
+
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email: normalizedEmail,
+      password,
+    })
+
+    setIsSubmitting(false)
+
+    if (signInError) {
+      setError(signInError.message)
+      return
+    }
+
+    navigate('/')
   }
 
   return (
-    <div className="container mx-auto px-4 py-20 max-w-md">
-      <h1 className="text-2xl font-bold mb-4">Admin Login</h1>
-      <form onSubmit={onSubmit} className="space-y-4">
-        <label className="block">
-          <span className="text-sm">Email</span>
-          <Input value={email} onChange={(e) => setEmail(e.target.value)} type="email" required />
-        </label>
+    <main className="container mx-auto max-w-md px-4 py-20">
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold">Admin Login</h1>
+          <p className="mt-2 text-muted-foreground">Sign in to manage Rubexy Designs content.</p>
+        </div>
 
-        <label className="block">
-          <span className="text-sm">Password</span>
-          <Input value={password} onChange={(e) => setPassword(e.target.value)} type="password" required />
-        </label>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="admin-email">Email</Label>
+            <Input
+              id="admin-email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              autoComplete="email"
+              required
+            />
+          </div>
 
-        {error && <div className="text-destructive">{error}</div>}
+          <div className="space-y-2">
+            <Label htmlFor="admin-password">Password</Label>
+            <Input
+              id="admin-password"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              autoComplete="current-password"
+              required
+            />
+          </div>
 
-        <Button type="submit" disabled={loading}>
-          {loading ? 'Signing in…' : 'Sign in'}
-        </Button>
-      </form>
-    </div>
+          {error && <p className="text-sm text-destructive">{error}</p>}
+
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? 'Signing in...' : 'Sign in'}
+          </Button>
+        </form>
+      </div>
+    </main>
   )
 }

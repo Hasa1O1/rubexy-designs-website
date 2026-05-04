@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, Eye } from 'lucide-react'
+import { EditText } from '@/components/EditText'
 import { Button } from '@/components/ui/button'
+
+const heroTitleFallback = 'Creativity Unlimited'
+const heroSubtitleFallback =
+  'Rubexy Designs Limited delivers high-quality brand, print, and media solutions for businesses in Zambia and beyond-from corporate wear and large-format signage to photography and documentaries. Our clients trust our professional, efficient service and long-term partnership mindset.'
 
 /**
  * Hero section for the home page
@@ -14,23 +19,39 @@ export function Hero() {
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-transparent"></div>
       </div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="mx-auto max-w-4xl text-center">
           {/* Top Orange Line */}
           <div className="w-full h-1 bg-orange-500 mb-8"></div>
-          
+
           {/* Main heading */}
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-white font-brand mb-6">
-            Creativity <span className="text-orange-500">Unlimited</span>
+            <EditText
+              contentKey="home.hero.title"
+              fallback={heroTitleFallback}
+              render={(value) => {
+                const titleWords = value.split(' ')
+                const accentWord = titleWords.pop()
+                const titleStart = titleWords.join(' ')
+
+                return (
+                  <>
+                    {titleStart} {accentWord && <span className="text-orange-500">{accentWord}</span>}
+                  </>
+                )
+              }}
+            />
           </h1>
-          
+
           {/* Elevator pitch */}
           <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-300 md:text-xl font-brand leading-relaxed">
-            Rubexy Designs Limited delivers high-quality brand, print, and media solutions 
-            for businesses in Zambia and beyond—from corporate wear and large-format signage 
-            to photography and documentaries. Our clients trust our professional, efficient 
-            service and long-term partnership mindset.
+            <EditText
+              contentKey="home.hero.subtitle"
+              fallback={heroSubtitleFallback}
+              multiline
+              render={(value) => value}
+            />
           </p>
 
           {/* Services */}
@@ -86,4 +107,3 @@ export function Hero() {
     </section>
   )
 }
-

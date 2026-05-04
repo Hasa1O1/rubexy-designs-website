@@ -19,7 +19,7 @@ cp .env.example .env
 # Edit .env and add your values (optional for development)
 ```
 
-For local development, you can skip email configuration. The API endpoints will log form submissions to the console.
+For local development, environment variables are only needed once the Supabase CMS client is added.
 
 ## 3. Start Development Server
 
@@ -115,14 +115,9 @@ Output will be in the `dist/` folder.
 
 ## Deploy
 
-### Quick Deploy to Vercel
+### Quick Deploy to Render
 
-```bash
-npm i -g vercel
-vercel
-```
-
-Follow the prompts. Done!
+Connect the repository to Render and use the existing `render.yaml` static site configuration.
 
 See `DEPLOYMENT.md` for detailed deployment instructions.
 

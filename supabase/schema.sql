@@ -1,26 +1,47 @@
--- supabase/schema.sql
--- Run this in the Supabase SQL editor to create required tables.
+create extension if not exists "pgcrypto";
 
--- Enable pgcrypto for UUID generation (idempotent)
-CREATE EXTENSION IF NOT EXISTS "pgcrypto";
-
--- Profiles table: extends auth.users with is_admin flag
-CREATE TABLE IF NOT EXISTS public.profiles (
-  id uuid PRIMARY KEY REFERENCES auth.users NOT NULL,
-  full_name text,
-  is_admin boolean DEFAULT false,
-  created_at timestamptz DEFAULT now()
+create table if not exists public.site_content (
+  id uuid primary key default gen_random_uuid(),
+  key text not null unique,
+  value text not null default '',
+  type text not null check (type in ('text', 'image')),
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
 );
 
--- Portfolio table: stores portfolio items and image paths
-CREATE TABLE IF NOT EXISTS public.portfolio (
-  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-  title text NOT NULL,
-  category text,
-  description text,
-  client text,
-  year integer,
-  image_url text,
-  images text[] DEFAULT array[]::text[],
-  created_at timestamptz DEFAULT now()
+create table if not exists public.portfolio_items (
+  id uuid primary key default gen_random_uuid(),
+  title text not null default '',
+  image_url text not null default '',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
 );
+
+alter table public.site_content enable row level security;
+alter table public.portfolio_items enable row level security;
+
+drop policy if exists "Public can read site content" on public.site_content;
+create policy "Public can read site content"
+on public.site_content
+for select
+using (true);
+
+drop policy if exists "Admin can manage site content" on public.site_content;
+create policy "Admin can manage site content"
+on public.site_content
+for all
+using (auth.jwt() ->> 'email' = 'rubexydesigns@gmail.com')
+with check (auth.jwt() ->> 'email' = 'rubexydesigns@gmail.com');
+
+drop policy if exists "Public can read portfolio items" on public.portfolio_items;
+create policy "Public can read portfolio items"
+on public.portfolio_items
+for select
+using (true);
+
+drop policy if exists "Admin can manage portfolio items" on public.portfolio_items;
+create policy "Admin can manage portfolio items"
+on public.portfolio_items
+for all
+using (auth.jwt() ->> 'email' = 'rubexydesigns@gmail.com')
+with check (auth.jwt() ->> 'email' = 'rubexydesigns@gmail.com');

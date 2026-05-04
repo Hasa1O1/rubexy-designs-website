@@ -5,12 +5,14 @@ import { PortfolioGrid, PortfolioItem } from '@/components/PortfolioGrid'
 import { Button } from '@/components/ui/button'
 import { Heart } from 'lucide-react'
 import { SEO } from '@/components/SEO'
+import { usePortfolioItems } from '@/hooks/usePortfolioItems'
 
 /**
  * Home page component
  * Features: Hero section, featured portfolio, compliance badges, CSR note, contact CTA
  */
 export function Home() {
+  const { data: portfolioItems = [] } = usePortfolioItems()
   // Featured portfolio items (would be loaded from MDX/CMS in production)
   const featuredPortfolio: PortfolioItem[] = [
     {
@@ -87,6 +89,7 @@ export function Home() {
       year: 2023,
     },
   ]
+  const visibleFeaturedPortfolio = portfolioItems.length > 0 ? portfolioItems.slice(0, 6) : featuredPortfolio
 
   return (
     <>
@@ -109,7 +112,7 @@ export function Home() {
                 Explore some of our recent projects
               </p>
             </div>
-            <PortfolioGrid items={featuredPortfolio} showFilters={false} />
+            <PortfolioGrid items={visibleFeaturedPortfolio} showFilters={false} />
             <div className="text-center mt-12">
               <Button asChild size="lg" variant="outline">
                 <Link to="/portfolio">View All Projects</Link>

@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { AdminBar } from '@/components/AdminBar'
 import { Toaster } from '@/components/ui/toaster'
 import { StructuredData } from '@/components/StructuredData'
 
@@ -16,7 +17,7 @@ import { Certifications } from '@/pages/Certifications'
 import { Contact } from '@/pages/Contact'
 import { RFQ } from '@/pages/RFQ'
 import { Privacy } from '@/pages/Privacy'
-import AdminLogin from '@/pages/AdminLogin'
+import { AdminLogin } from '@/pages/AdminLogin'
 
 // Create React Query client
 const queryClient = new QueryClient({
@@ -39,6 +40,9 @@ function App() {
         <div className="flex min-h-screen flex-col">
           {/* Structured data for SEO */}
           <StructuredData />
+
+          {/* Admin-only controls */}
+          <AdminBar />
           
           {/* Header */}
           <Header />
@@ -51,7 +55,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/services" element={<Services />} />
               <Route path="/portfolio" element={<Portfolio />} />
-              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/clients" element={<Clients />} />
               <Route path="/certifications" element={<Certifications />} />
               <Route path="/contact" element={<Contact />} />

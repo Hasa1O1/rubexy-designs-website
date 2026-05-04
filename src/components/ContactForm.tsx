@@ -79,23 +79,24 @@ export function ContactForm() {
     setIsSubmitting(true)
 
     try {
-      // Submit to API endpoint
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-
-      if (!response.ok) {
-        throw new Error('Submission failed')
-      }
+      const subject = encodeURIComponent(`Website contact: ${data.service}`)
+      const body = encodeURIComponent(
+        [
+          `Name: ${data.name}`,
+          `Email: ${data.email}`,
+          `Phone: ${data.phone}`,
+          `Company: ${data.company || 'Not provided'}`,
+          `Service Interest: ${data.service}`,
+          '',
+          data.message,
+        ].join('\n')
+      )
+      window.location.href = `mailto:rubexydesigns@gmail.com?subject=${subject}&body=${body}`
 
       // Success
       toast({
-        title: 'Message sent!',
-        description: 'Thank you for contacting us. We\'ll get back to you soon.',
+        title: 'Email draft opened',
+        description: 'Please send the email from your mail app to complete your enquiry.',
       })
 
       reset()
